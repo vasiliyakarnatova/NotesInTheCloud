@@ -1,13 +1,13 @@
 import express from "express";
-import { getNotes, getNote, createNote, updateNote, deleteNote } from "../controllers/noteController"
+import { getNotes, getNoteFromUser, createNoteForUser, updateNote, deleteNote } from "../controllers/noteController"
 import { createTask, deleteTask, updateTask } from "../controllers/taskController";
 import { addCollaborator, shareNote } from "../controllers/userController";
 
 const router = express.Router();
 
-router.get("/", getNotes)
-router.get("/:noteId", getNote);
-router.post("/", createNote);
+router.get("/", getNotes)  
+router.post("/", createNoteForUser);
+router.get("/:noteId", getNoteFromUser)
 router.put("/:noteId", updateNote);
 router.delete("/:noteId", deleteNote);
 
