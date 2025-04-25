@@ -6,4 +6,4 @@ const knexInstance = knex(knexfile.development);
 const { Model } = require('objection');
 Model.knex(knexInstance); 
 
-module.exports = knexInstance; 
+export default knexInstance; 
