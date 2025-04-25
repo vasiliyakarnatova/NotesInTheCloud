@@ -6,6 +6,10 @@ class User extends Model{
         return 'user';
     }
 
+    static get idColumn() {
+        return 'userName';
+    }
+
     static get jsonSchema() {
         return {
             type: 'object',
