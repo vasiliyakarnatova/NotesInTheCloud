@@ -1,5 +1,9 @@
 const { Model } = require('objection');
 
+import knexInstance from '../knexConnection';  
+
+Model.knex(knexInstance);
+
 class Editor extends Model{
     static get tableName() {
         return 'editor';
