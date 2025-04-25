@@ -1,5 +1,9 @@
 const { Model } = require('objection');
 
+import knexInstance from '../knexConnection';  
+
+Model.knex(knexInstance);
+
 class TodoItem extends Model {
     static get tableName() {
         return 'todoItem';
