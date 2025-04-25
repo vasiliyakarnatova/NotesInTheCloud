@@ -1,5 +1,5 @@
 import express from 'express';
-import authRoutes from './src/routes/authRoutes'; // <-- Убедись, че пътят е правилен
+import authRoutes from './src/routes/authRoutes';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import setupDb from './src/db/db-setup';

@@ -68,47 +68,6 @@ const Register = () => {
         }
     };
     
-    // const handleFromSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-    //     if (user.username === "" || user.email === "" || user.password === "") {
-    //         setMessage("Please fill in all fields");
-    //         return;
-    //     }
-
-    //     //if username already exists in the database, show error message
-    //     if (isUsernameTaken(user.username)) {
-    //         setMessage("Username already taken, please choose another one");
-    //         return;
-    //     }
-
-    //     // if email is not valid, show error message
-    //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    //     if (!emailRegex.test(user.email)) {
-    //         setMessage("Please enter a valid email address");
-    //         return;
-    //     }
-
-    //     //if email already exists in the database, show error message
-    //     if (isUserRegistered(user.email)) {
-    //         setMessage("Already registered, please login instead");
-    //         return;
-    //     }
-
-    //     //if password is less than 6 characters, show error message
-    //     if (user.password.length < 6) {
-    //         setMessage("Password must be at least 6 characters long");
-    //         return;
-    //     }
-
-    //     //hash the password
-    //     const hashedPassword = await bcrypt.hash(user.password, 10);
-    //     const newUser = { ...user, password: hashedPassword };
-
-    //     addNewUser(newUser); // add the new user to the local storage
-    //     setUser({ username: "", email: "", password: "" }); // reset the form
-    //     navigate("/login"); // navigate to the login page
-    // }
-
     return (
         <>
             <div className="background">

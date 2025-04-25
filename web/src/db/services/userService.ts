@@ -6,6 +6,11 @@ export const createUser = async (data: IUser) => {
   return await User.query().insert(data);
 };
 
-export const getUserByUserName = async (username: string) => {
-    return await User.query().findOne(username ); // правя заявка към база данни през Objection.js.
+export const getUserByUserName = async (username: string): Promise<IUser | undefined> => {
+  try {
+    return await User.query().findOne( {userName: username} );
+  } catch (err) {
+    console.error("Error in getUserByUserName:", err);
+    return undefined;
+  }
 };

@@ -12,10 +12,10 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} /> {/* the element we want to pass and the < .. /> is a tag*/}
         <Route path="/register" element={<Register />} />
-        <Route path="/" element={
-          <ProtectedRoute>
+        <Route path="/home" element={
+         // <ProtectedRoute>
             <Home />
-          </ProtectedRoute>
+         // </ProtectedRoute>
         } />
       </Routes>
     </BrowserRouter>
