@@ -19,6 +19,7 @@ exports.up = function(knex) {
     .createTable('editor', (table) => {
       table.uuid('noteId').notNullable().references('noteId').inTable('note');
       table.string('name').notNullable().references('userName').inTable('user');
+      table.primary(['noteId', 'name']);
     })
     .createTable('todoItem', (table) => {
       table.uuid('todoItemId').defaultTo(knex.raw('gen_random_uuid()')).primary();

@@ -5,6 +5,7 @@
   "scripts": {
     "migrate": "npx knex migrate:latest --knexfile ./src/db/knexfile.js",
     "down": "npx knex migrate:down --knexfile ./src/db/knexfile.js",
+    "runTest": "npx ts-node-dev src/db/testUser.ts",
     "devDB": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,12 +1,12 @@
 const { Model } = require('objection');
 
-import knexInstance from '../knexConnection';  
-
-Model.knex(knexInstance);
-
 class Notification extends Model{
     static get tableName() {
         return 'notification';
+    }
+
+    static get idColumn() {
+        return 'notificationId';
     }
 
     static get jsonSchema() {

@@ -1,13 +1,13 @@
 const { Model } = require('objection');
 
-import knexInstance from '../knexConnection';  
-
-Model.knex(knexInstance);
-
 class User extends Model{
 
     static get tableName() {
         return 'user';
+    }
+
+    static get idColumn() {
+        return 'userName';
     }
 
     static get jsonSchema() {
