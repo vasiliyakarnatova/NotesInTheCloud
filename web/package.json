@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "migrate": "npx knex migrate:latest --knexfile ./db/knexfile.js",
-    "down": "npx knex migrate:down --knexfile ./db/knexfile.js",
-    "dev": "nodemon index.js",
+    "migrate": "npx knex migrate:latest --knexfile ./src/db/knexfile.js",
+    "down": "npx knex migrate:down --knexfile ./src/db/knexfile.js",
+    "devDB": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
 
     "devServer": "ts-node-dev --respawn src/index.ts",
