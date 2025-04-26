@@ -10,6 +10,8 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
+      host: 'localhost',
+      port: 5432,
       database: 'my_db',
       user:     'postgres',
       password: 'password'
@@ -24,16 +26,3 @@ module.exports = {
     ...knexSnakeCaseMappers(),
   },
 };
-
-const knex = require('knex');
-
-const knexInstance = knex({
-  client: 'postgresql',
-  connection: {
-    database: 'my_db',
-    user:     'postgres',
-    password: 'password'
-  }
-})
-
-module.exports - knexInstance;

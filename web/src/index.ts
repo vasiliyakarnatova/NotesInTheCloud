@@ -2,13 +2,12 @@ import express from "express";
 import routes from "./routes/server";
 import cors from "cors";
 import { validateUserIdMiddleware } from "./middlewares/userIdMiddleware";
-import { Model } from "objection"
-import { knexInstance } from "./db/"
+import setupDb from './db/db-setup';
 
 const app = express();
-const PORT = 8080;
+const PORT = 8081;
 
-Model.knex(knexInstance)
+setupDb()
 
 app.use(cors());
 app.use(express.json());

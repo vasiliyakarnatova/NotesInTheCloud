@@ -7,15 +7,15 @@ const router = express.Router();
 
 router.get("/", getNotes)  
 router.post("/", createNoteForUser);
-router.get("/:noteId", getNoteFromUser)
-router.put("/:noteId", updateNote);
-router.delete("/:noteId", deleteNote);
+// router.get("/:noteId", getNoteFromUser)
+// router.put("/:noteId", updateNote);
+// router.delete("/:noteId", deleteNote);
 
-router.post("/:noteId", createTask);
-router.delete("/:noteId/:taskId", deleteTask)
-router.put("/:noteId/:taskId", updateTask)
+// router.post("/:noteId", createTask);
+// router.delete("/:noteId/:taskId", deleteTask)
+// router.put("/:noteId/:taskId", updateTask)
 
-router.patch("/:noteId", addCollaborator)
-router.get("/:userId/:noteId/shared", shareNote)
+// router.patch("/:noteId", addCollaborator)
+// router.get("/:userId/:noteId/shared", shareNote)
 
 export default router;

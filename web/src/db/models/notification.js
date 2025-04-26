@@ -1,8 +1,8 @@
 const { Model } = require('objection');
 
-import knexInstance from '../knexConnection';  
+// import knexInstance from '../knexConnection';  
 
-Model.knex(knexInstance);
+// Model.knex(knexInstance);
 
 class Notification extends Model{
     static get tableName() {
