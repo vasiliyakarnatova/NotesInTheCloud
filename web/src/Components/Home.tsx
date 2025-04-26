@@ -1,34 +1,62 @@
-//import { useEffect, useState } from "react";
-//// import { deleteActiveUser, getActiveUser, User } from "../Users";
-//import { useNavigate } from "react-router-dom";
+import { StatusCodes } from "http-status-codes";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+interface User {
+  username: string;
+}
 
 const Home = () => {
-    // const [activeUser, setActiveUser] = useState<User>();
-    // const navigate =  useNavigate(); // hook to navigate to another page
-    
-    // useEffect(() => {
-    //     const user = getActiveUser(); // get the active user from the local storage, we know it exists because of the ProtectedRoute in App.tsx
-    //     setActiveUser(user); // set the active user in the state
-    // }, []); // run this effect only once when the component mounts
-// 
-    //     const handleLogout = () => {
-    //     deleteActiveUser(); // remove the active user from the local storage
-    //     navigate("/login"); // navigate to the login page
-    // }
+  const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string>("");
 
-    return (
-        
-        <div style = {{color: "white", textAlign: "center", marginTop: "20px"}}>
-            <h1>Welcome to the Home Page</h1>
-        </div>
-        /* <div style = {{color: "white", textAlign: "center", marginTop: "20px"}}>
-            <h1>Welcome {activeUser?.username} {activeUser?.email} {activeUser?.password} </h1>    
-        </div>
-        <div style = {{textAlign: "center"}}>
-            <button onClick={handleLogout} style = {{marginTop: "20px"}}>Log Out</button>
-        </div> */
-        
-    );
-}
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+          const response = await fetch("http://localhost:3000/api/current-user", { // fetch current user
+          credentials: "include", // include cookies in the request
+        });
+
+        if (response.ok) {
+          const data = await response.json(); // parse the response as JSON
+          setUser(data); // set the user state with the data received
+        } else {
+          setError(`Error ${response.status}: Failed to fetch user`);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+        setError(`Error ${StatusCodes.INTERNAL_SERVER_ERROR}: Could not fetch user`);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  const handleLogout = async () => {
+
+    try {
+      await fetch("http://localhost:3000/api/logout", {
+        method: "POST", // POST request to logout
+        credentials: "include", // include cookies in the request
+      });
+
+      setUser(null); // clear user state
+      navigate("/login");
+
+    } catch (error) {
+      console.error("Failed to logout:", error);
+      setError(`Error ${StatusCodes.INTERNAL_SERVER_ERROR}: Could not log out`);
+    }
+  };
+
+  return (
+    <div style={{ color: "white", textAlign: "center", marginTop: "20px" }}>
+      <h1>Welcome {user?.username}!</h1>
+      <button onClick={handleLogout} style={{ marginTop: "20px" }}>Log Out</button>
+    </div>
+  );
+};
 
 export default Home;

@@ -1,15 +1,36 @@
 import { Navigate } from "react-router-dom";
-import { getActiveUser } from "../Users";
-import { JSX } from "react";
+import { JSX, useEffect, useState } from "react";
+import { isAuthenticated } from "../middleware/authMiddleware";
 
-const ProtectedRoute = ({ children }: { children: JSX.Element }) => { 
-    const user = getActiveUser();
+const ProtectedRoute = ({ children }: { children: JSX.Element }) => { // children is the component that we want to protect
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
-    if (!user) {
-        return <Navigate to="/login" replace />;
-    }
+  useEffect(() => {
+    const checkAuth = async () => { // function to check if the user is logged in
+      try {
+        const response = await fetch("http://localhost:3000/api/current-user", {
+          credentials: "include",
+        });
 
-    return children;
+        if (response.ok) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error("Authentication check failed:", error);
+        setIsLoggedIn(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
+
+  if (!isAuthenticated) { // the user is not logged in
+    return <Navigate to="/login" replace />;
+  }
+
+  return children; // return the protected component because the user is logged in
 };
 
 export default ProtectedRoute;

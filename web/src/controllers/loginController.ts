@@ -1,25 +1,43 @@
-import { Request, RequestHandler, Response } from "express";
-import bcrypt from  "bcryptjs";
+import { Request, Response } from "express";
 import { IUser } from "../db/interfaces/user";
 import { getUser } from "../utils/utils";
+import { StatusCodes } from "http-status-codes";
+import bcrypt from "bcryptjs";
 
+declare module "express-session" {
+    interface SessionData {
+      userInSession?: IUser;
+    }
+  }
+  
 export const loginUser = async (req: Request, res: Response): Promise<IUser | undefined | any> => {
     const { username, password } = req.body;
-
+    
     try {
-        const user = await getUser(username);
-        if (user !== undefined) {
+        const user = await getUser(username); // getUser returns the user object from the database
+        if (user !== undefined) { 
+
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
-                return res.status(401).json({ message: "Invalid username or password" });
+                res.status(StatusCodes.UNAUTHORIZED).json({ message: "Invalid username or password" });
+                return;
             }
 
-            res.json(user);
+            //this user is logged in and we can set the session
+            req.session.userInSession = { 
+                userName: user.userName,
+                email: user.email,
+                password: user.password,
+            };
+            
+            res.status(StatusCodes.OK).json(user);
         } else {
-            return res.status(401).json({ message: "Invalid username or password" });
+            res.status(StatusCodes.UNAUTHORIZED).json({ message: "Invalid username or password" });
+            return;
         }
-
     } catch (err) {
-        res.status(500).json({ message: "Server error", error: err });
+        console.log("User not found:", username);
+        console.error("Error logging in user:", err);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Server errorr", error: err });
     }
 };

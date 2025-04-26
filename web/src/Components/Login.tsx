@@ -1,5 +1,7 @@
+import { StatusCodes } from "http-status-codes";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 
 interface UserLogin {
     username: string;
@@ -8,22 +10,27 @@ interface UserLogin {
 
 const Login = () => {
     const [user, setUser] = useState<UserLogin>({ username: "", password: "" });
-
-    const navigate = useNavigate(); // hook to navigate to another page
-    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const id = e.target.id; // get the id of the input field
-        const value = e.target.value; // get the value of the input field
-
-        setUser({ ...user, [id]: value }); // set the user object with the new value
-        setMessage(""); // reset the message when the user types in the input fields
-    }
-
+    const navigate = useNavigate();
     const [message, setMessage] = useState<string>("");
 
+    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const id = e.target.id; // get the id of the input field (username or password)
+        const value = e.target.value; // get the value of the input field (username or password)
+
+        setUser({ ...user, [id]: value }); // set the user object with the new value
+        setMessage(""); 
+    }
+
     const handleFromSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+        e.preventDefault(); // prevent the default form submission
+        
         if (user.username === "" || user.password === "") {
-            setMessage("Please fill in all fields");
+            const errorMessage = {
+                errorCode: `Error ${StatusCodes.BAD_REQUEST}`,
+                errorMessage: "Please fill in all fields.",
+            };
+            console.error(errorMessage.errorCode + ": " + errorMessage.errorMessage);
+            setMessage(errorMessage.errorMessage);
             return;
         }
 
@@ -32,29 +39,40 @@ const Login = () => {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username: user.username, password: user.password }),
+                credentials: "include",
             });
-
             const data = await response.json();
-
+            
             if (!response.ok) {
-                setMessage(data.message || "Login failed");
+                const errorMessage = {
+                    errorCode: data.message ? `Error ${response.status}` :`Error ${StatusCodes.UNAUTHORIZED}`,
+                    errorMessage: data.message ? data.message : "Login failed",
+                };
+                console.error(errorMessage.errorCode + ": " + errorMessage.errorMessage);
+                setMessage(errorMessage.errorMessage);
                 return;
             }
-
-            //setMessage("Successfully logged in!");
-            //setUser({ username: "", password: "" });
+            
+            setUser({ username: "", password: "" });
+            setMessage("");
             navigate("/home");
+
         } catch (error) {
-            setMessage("An error occurred. Please try again.");
+            const errorMessage = {
+                errorCode: `Error ${StatusCodes.INTERNAL_SERVER_ERROR}`,
+                errorMessage: "An error occurred. Please try again.",
+            };
+            console.error(errorMessage.errorCode + ": " + errorMessage.errorMessage);
+            setMessage(errorMessage.errorMessage);
         }
     };
 
     return (
         <>
-            <div className="background">
+            {/* <div className="background">
                 <div className="shape"></div>
                 <div className="shape"></div>
-            </div>
+            </div> */}
             <form onSubmit={handleFromSubmit}>
                 <h3>Log in</h3>
 
@@ -67,7 +85,10 @@ const Login = () => {
                 <button>Log In</button>
 
                 <div className="message">
-                    {message ? <h4>{message}</h4> : <h4>Create an account? <a href="/register">Register</a></h4>} {/* show error message if it exists */}
+                    {<h4>Create an account? <a href="/register">Register</a></h4>} {/* show error message if it exists */}
+                </div>
+                <div className="errorMessage">
+                    {<h4>{message}</h4>} {/* show error message if it exists */}
                 </div>
             </form>
         </>

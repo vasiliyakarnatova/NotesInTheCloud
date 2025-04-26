@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import Login from "./Components/Login"
 import Register from "./Components/Register";
 import Home from './Components/Home';
@@ -10,12 +10,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} /> {/* the element we want to pass and the < .. /> is a tag*/}
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={
-         // <ProtectedRoute>
+          <ProtectedRoute> 
             <Home />
-         // </ProtectedRoute>
+          </ProtectedRoute>
         } />
       </Routes>
     </BrowserRouter>

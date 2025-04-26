@@ -11,6 +11,7 @@
     "outDir": "dist",
     "rootDir": ".",
     "jsx": "react-jsx",
+    "typeRoots": ["./node_modules/@types"],
   },
-  "include": ["index.ts", "src/**/*", "tsconfig.node.json"]
+  "include": ["index.ts", "src/**/*", "tsconfig.node.json", "src"],
 }
