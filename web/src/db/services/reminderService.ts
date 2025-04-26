@@ -8,7 +8,8 @@ import { IReminder } from '../interfaces/reminder';
 
 export type IReminderUpdate = Partial<Pick<IReminder, 'remindTime' | 'description'>>;
 
-// check (remindTime => now) => createNotification(..)
+// validation for remindTime to be => now
+// check (remindTime => now) => createNotification(..) else error
 export const createReminder = async (noteId: string, remindTime: string, description: string, reminderCreater: string) => {
     const reminderId = uuidv4(); 
     const newReminder = await Reminder.query().insert({reminderId, noteId, reminderCreater, remindTime, description});
@@ -25,7 +26,7 @@ export const updateReminder = async (reminderId: string, data: IReminderUpdate) 
     return await reminder.$query().patchAndFetch(data);
 };
 
-//check if remindTime < now => deleteNotification(...) else => save history
+//check if remindTime => now => deleteNotification(...) else => save history ?? 
 export const deleteReminder = async (reminderId: string) => {
     return await Reminder.query().deleteById(reminderId);
 };

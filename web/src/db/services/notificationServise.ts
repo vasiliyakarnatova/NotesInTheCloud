@@ -3,6 +3,7 @@ const Reminder = require('../models/reminder');
 
 import { v4 as uuidv4 } from 'uuid';
 
+// createReminder => createNotification
 export const createNotification = async (remindId: string) => {
     const reminder = await Reminder.query().findOne({ reminderId: remindId });
     if(!reminder){
@@ -13,6 +14,7 @@ export const createNotification = async (remindId: string) => {
     return await Notification.query().insert({ notificationId, remindId, sentAt, isRead: false});
 };
 
+// updateReminder => updateNotification
 export const updateNotification = async (notificationId: string, isRead: boolean) => {
     const notification = await Notification.query().findOne({ notificationId: notificationId });
 
@@ -23,6 +25,8 @@ export const updateNotification = async (notificationId: string, isRead: boolean
     return await notification.$query().patchAndFetch({ isRead });
 };
 
+
+//only if remindTime > now
 export const deleteNotification = async (notificationId: string) => {
     return await Notification.query().deleteById(notificationId);
 };

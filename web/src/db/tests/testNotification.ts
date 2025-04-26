@@ -1,5 +1,5 @@
-import setupDb from "./db-setup";
-import { createNotification, updateNotification, deleteNotification, getNotification, getNotificationsFromUser } from '../db/services/notificationServise';
+import setupDb from "../db-setup";
+import { createNotification, updateNotification, deleteNotification, getNotification, getNotificationsFromUser } from '../services/notificationServise';
 
 setupDb();
 
@@ -29,7 +29,7 @@ setupDb();
 //     console.log(notification);
 // })();
 
-(async () => {
-    const notifications = await getNotificationsFromUser("Vasiliya");
-    console.log(notifications);
-})();
+// (async () => {
+//     const notifications = await getNotificationsFromUser("Vasiliya");
+//     console.log(notifications);
+// })();
