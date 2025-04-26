@@ -1,12 +1,12 @@
 const { Model } = require('objection');
 
-// import knexInstance from '../knexConnection';  
-
-// Model.knex(knexInstance);
-
 class Reminder extends Model{
     static get tableName() {
         return 'reminder';
+    }
+
+    static get RidColumn() {
+        return 'reminderId';
     }
 
     static get jsonSchema() {
