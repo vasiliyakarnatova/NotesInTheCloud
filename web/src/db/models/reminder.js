@@ -5,7 +5,7 @@ class Reminder extends Model{
         return 'reminder';
     }
 
-    static get RidColumn() {
+    static get idColumn() {
         return 'reminderId';
     }
 

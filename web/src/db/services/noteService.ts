@@ -11,12 +11,12 @@ export const addEditorToNote = async (noteId: string, name: string) => {
     return await Editor.query().insert({ noteId, name });
 };
 
+// createNote(...) => addEditorToNote(...)
 export const createNote = async (title: string, description: string, author: string) => {
     const noteId = uuidv4(); 
     const createdAt = new Date().toISOString();
     const updatedAt = createdAt;
     const newNote = await Note.query().insert({ noteId, title, description, author, createdAt, updatedAt });
-    addEditorToNote(newNote.noteId, author);
     return newNote;
 };
 
@@ -43,7 +43,7 @@ export const updateNote = async (noteId: string, data: INoteUpdate) => {
     return await note.$query().patchAndFetch(updatedData); 
 };
 
+// deleteNote(...) => deleteEditor(...) for this note
 export const deleteNote = async (noteId: string) => {
-    await Editor.query().delete().where({ noteId });
-    return await Note.query().deleteById({noteId: noteId});
+    return await Note.query().deleteById(noteId);
 };
