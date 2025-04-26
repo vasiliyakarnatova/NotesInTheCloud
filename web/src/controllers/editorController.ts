@@ -1,4 +1,4 @@
-import { addEditorToNote } from "../db/services/noteService";
+import { addEditorToNote } from "../db/services/editorService";
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 

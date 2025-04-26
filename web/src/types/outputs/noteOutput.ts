@@ -1,5 +1,5 @@
 export interface NoteOutput {
-    id: string,
+    id?: string,
     title: string,
     description: string,
 }

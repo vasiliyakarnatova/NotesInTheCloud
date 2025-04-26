@@ -1,21 +1,22 @@
 import express from "express";
 import { getNotes, getNoteFromUser, createNoteForUser, updateNoteById, deleteNoteById } from "../controllers/noteController"
 import { createTask, deleteTask, updateTask } from "../controllers/taskController";
-import { addCollaborator, shareNote } from "../controllers/userController";
+import { addCollaborator, shareNote } from "../controllers/editorController";
+import { accessToNoteMiddleware } from "../middlewares/accessMiddleware";
 
 const router = express.Router();
 
-router.get("/", getNotes)  
+router.get("/", getNotes)
 router.post("/", createNoteForUser);
-router.get("/:noteId", getNoteFromUser);
-router.put("/:noteId", updateNoteById);
-router.delete("/:noteId", deleteNoteById);
+router.get("/:noteId", accessToNoteMiddleware, getNoteFromUser);
+router.put("/:noteId", accessToNoteMiddleware, updateNoteById);
+router.delete("/:noteId", accessToNoteMiddleware, deleteNoteById);
 
-router.post("/:noteId", createTask);
-router.delete("/:noteId/:taskId", deleteTask);
-router.put("/:noteId/:taskId", updateTask)
+router.post("/:noteId", accessToNoteMiddleware, createTask);
+router.delete("/:noteId/:taskId", accessToNoteMiddleware, deleteTask);
+router.put("/:noteId/:taskId", accessToNoteMiddleware, updateTask)
 
-router.patch("/:noteId", addCollaborator);
-router.get("/:userId/:noteId/shared", shareNote);
+router.patch("/:noteId", accessToNoteMiddleware, addCollaborator);
+router.get("/:userId/:noteId/shared", accessToNoteMiddleware, shareNote);
 
 export default router;

@@ -1,22 +1,16 @@
 const Note = require('../models/note');
 const Editor = require('../models/editor');
 
-import { Note } from 'types/note';
 import { INote } from '../interfaces/note';
 
 import { v4 as uuidv4 } from 'uuid';
-import { Editor } from 'types/editor';
 import { transaction, Transaction } from 'objection';
 
 export type INoteUpdate = Partial<Pick<INote, 'title' | 'description'>>;
 
-export const addEditorToNote = async (noteId: string, name: string): Promise<Editor | undefined> => {
-    return await Editor.query().insert({ noteId, name });
-};
-
-export const createNote = async (title: string, description: string, author: string): Promise<Note | undefined> => {
+export const createNote = async (title: string, description: string, author: string) => {
     try {
-        const newNote = await transaction(Note.knex(), async (trx: Transaction): Promise<Note | undefined> => {
+        const newNote = await transaction(Note.knex(), async (trx: Transaction) => {
             const noteId = uuidv4(); 
             const createdAt = new Date().toISOString();
             const updatedAt = createdAt;
@@ -42,7 +36,7 @@ export const createNote = async (title: string, description: string, author: str
     }
 };
 
-export const getNote = async (noteId: string): Promise<Note | undefined> => {
+export const getNote = async (noteId: string) => {
     return await Note.query().findOne({ noteId: noteId });
 };
 
@@ -56,7 +50,7 @@ export const getNotesFromUser = async (userName: string) => {
     return notes;
 };
 
-export const updateNote = async (noteId: string, data: INoteUpdate): Promise<Note | undefined> => {
+export const updateNote = async (noteId: string, data: INoteUpdate) => {
     const note = await Note.query().findById(noteId);
     if (!note) {
         throw new Error('Note not found');
@@ -71,9 +65,9 @@ export const updateNote = async (noteId: string, data: INoteUpdate): Promise<Not
     return update;
 };
 
-export const deleteNote = async (noteId: string): Promise<Note | undefined> => {
+export const deleteNote = async (noteId: string) => {
     try {
-        const note = await transaction(Note.knex(), async (trx: Transaction): Promise<Note | undefined> => {
+        const note = await transaction(Note.knex(), async (trx: Transaction) => {
             const deletedNote = await Note.query(trx).findOne({ noteId: noteId });
             if (!deletedNote) {
                 return undefined;
