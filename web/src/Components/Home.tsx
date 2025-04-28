@@ -1,21 +1,17 @@
 import { StatusCodes } from "http-status-codes";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-interface User {
-  username: string;
-}
+import { UserHome } from "../componetsInterfaces/componentsInterfaces";
 
 const Home = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserHome | null>(null);
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
-  const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-          const response = await fetch("http://localhost:3000/api/current-user", { // fetch current user
+        const response = await fetch("http://localhost:3000/api/current-user", { // fetch current user
           credentials: "include", // include cookies in the request
         });
 
@@ -35,7 +31,6 @@ const Home = () => {
   }, []);
 
   const handleLogout = async () => {
-
     try {
       await fetch("http://localhost:3000/api/logout", {
         method: "POST", // POST request to logout

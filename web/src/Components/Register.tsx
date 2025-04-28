@@ -1,12 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-interface UserRegister {
-    username: string;
-    email: string;
-    password: string;
-}
+import { UserRegister } from "../componetsInterfaces/componentsInterfaces"
 
 const Register = () => {
     const [user, setUser] = useState<UserRegister>({ username: "", email: "", password: "" });
@@ -96,11 +91,7 @@ const Register = () => {
     };
 
     return (
-         <>
-        {/* //     <div className="background">
-        //         <div className="shape"></div>
-        //         <div className="shape"></div>
-        //     </div> */}
+        <>
             <form onSubmit={handleFromSubmit}>
                 <h3>Registration</h3>
 

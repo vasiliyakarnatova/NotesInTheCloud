@@ -1,8 +1,7 @@
 import express from 'express';
-import authRoutes from './src/routes/authRoutes'; 
+import authRoutes from './src/routes/authRoutes';
 import cors from 'cors';
 import setupDb from './src/db/db-setup';
-
 import session from "express-session";
 import cookieParser from "cookie-parser";
 
@@ -20,12 +19,11 @@ app.use(cors({ // Enable CORS for all routes
     credentials: true // Allow credentials (cookies) to be sent with requests
 }));
 
-
 app.use(session({ // Set up session middleware
     secret: "my-secret-key", // change this
     resave: false, // don't save session if unmodified
     saveUninitialized: false, // don't create session until something stored
-    cookie: { 
+    cookie: {
         secure: false, // change to true if using https
         httpOnly: true, // for security reasons, don't allow client-side JS to access the cookie
         maxAge: 1000 * 60 * 60 // 1 hour lifetime of the cookie

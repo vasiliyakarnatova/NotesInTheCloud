@@ -1,6 +1,5 @@
 import { Navigate } from "react-router-dom";
 import { JSX, useEffect, useState } from "react";
-import { isAuthenticated } from "../middleware/authMiddleware";
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => { // children is the component that we want to protect
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
@@ -26,7 +25,11 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => { // childre
     checkAuth();
   }, []);
 
-  if (!isAuthenticated) { // the user is not logged in
+  if (isLoggedIn === null) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isLoggedIn) {
     return <Navigate to="/login" replace />;
   }
 

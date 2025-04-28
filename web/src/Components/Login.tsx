@@ -1,12 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-
-interface UserLogin {
-    username: string;
-    password: string;
-}
+import { UserLogin } from "../componetsInterfaces/componentsInterfaces";
 
 const Login = () => {
     const [user, setUser] = useState<UserLogin>({ username: "", password: "" });
@@ -18,12 +13,12 @@ const Login = () => {
         const value = e.target.value; // get the value of the input field (username or password)
 
         setUser({ ...user, [id]: value }); // set the user object with the new value
-        setMessage(""); 
+        setMessage("");
     }
 
     const handleFromSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); // prevent the default form submission
-        
+
         if (user.username === "" || user.password === "") {
             const errorMessage = {
                 errorCode: `Error ${StatusCodes.BAD_REQUEST}`,
@@ -42,17 +37,17 @@ const Login = () => {
                 credentials: "include",
             });
             const data = await response.json();
-            
+
             if (!response.ok) {
                 const errorMessage = {
-                    errorCode: data.message ? `Error ${response.status}` :`Error ${StatusCodes.UNAUTHORIZED}`,
+                    errorCode: data.message ? `Error ${response.status}` : `Error ${StatusCodes.UNAUTHORIZED}`,
                     errorMessage: data.message ? data.message : "Login failed",
                 };
                 console.error(errorMessage.errorCode + ": " + errorMessage.errorMessage);
                 setMessage(errorMessage.errorMessage);
                 return;
             }
-            
+
             setUser({ username: "", password: "" });
             setMessage("");
             navigate("/home");
@@ -69,10 +64,6 @@ const Login = () => {
 
     return (
         <>
-            {/* <div className="background">
-                <div className="shape"></div>
-                <div className="shape"></div>
-            </div> */}
             <form onSubmit={handleFromSubmit}>
                 <h3>Log in</h3>
 
@@ -85,10 +76,10 @@ const Login = () => {
                 <button>Log In</button>
 
                 <div className="message">
-                    {<h4>Create an account? <a href="/register">Register</a></h4>} {/* show error message if it exists */}
+                    {<h4>Create an account? <a href="/register">Register</a></h4>}
                 </div>
                 <div className="errorMessage">
-                    {<h4>{message}</h4>} {/* show error message if it exists */}
+                    {<h4>{message}</h4>}
                 </div>
             </form>
         </>

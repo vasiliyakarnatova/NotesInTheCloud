@@ -5,6 +5,10 @@ class Reminder extends Model{
         return 'reminder';
     }
 
+    static get idColumn() {
+        return 'reminderId';
+    }
+
     static get jsonSchema() {
         return {
             type: 'object',

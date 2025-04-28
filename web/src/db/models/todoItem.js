@@ -5,6 +5,10 @@ class TodoItem extends Model {
         return 'todoItem';
     }
 
+    static get idColumn() {
+        return 'todoItemId';
+    }
+
     static get jsonSchema() {
         return {
             type: 'object',

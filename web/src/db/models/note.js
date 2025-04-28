@@ -5,6 +5,10 @@ class Note extends Model{
         return 'note';
     }
 
+    static get idColumn() {
+        return 'noteId';
+    }
+
     static get jsonSchema() {
         return {
             type: 'object',

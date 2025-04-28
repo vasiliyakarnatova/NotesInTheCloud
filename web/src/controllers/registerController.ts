@@ -35,7 +35,3 @@ export const registerUser = async (req: Request, res: Response): Promise<IUser |
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Server error", error: err });
     }
 }
-
-function containEmail(username: any) {
-    throw new Error("Function not implemented.");
-}

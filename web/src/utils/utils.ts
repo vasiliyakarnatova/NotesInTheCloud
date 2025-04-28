@@ -30,6 +30,7 @@ export const containsEmail = async (email: string) => {
         return false;
     }
 }
+
 export const getUser = async (username: string) => {
     try {
         const user = await getUserByUserName(username) as IUser | undefined;
@@ -48,9 +49,11 @@ export const getUser = async (username: string) => {
 export const currentUser = async (req:Request, res:Response): Promise<any> => {
     if (req.session && req.session.userInSession) {
         res.status(StatusCodes.OK).json(req.session.userInSession);
+        return req.session.userInSession; // ??
         return; // ??
     } else {
         res.status(StatusCodes.UNAUTHORIZED).json({ message: "Not authenticated" });
+        return undefined; // ??
         return; // ??
     }
 };

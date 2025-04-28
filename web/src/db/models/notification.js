@@ -5,6 +5,10 @@ class Notification extends Model{
         return 'notification';
     }
 
+    static get idColumn() {
+        return 'notificationId';
+    }
+
     static get jsonSchema() {
         return {
             type: 'object',

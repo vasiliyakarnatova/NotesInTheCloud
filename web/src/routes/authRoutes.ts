@@ -13,8 +13,8 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 
 router.get("/home", isAuthenticated, (req, res) => {  // Check if user is logged in before accessing this route in the middleware
-    res.status( StatusCodes.OK).json({ message: "Welcome to your home page!" });
-  });
+  res.status(StatusCodes.OK).json({ message: "Welcome to your home page!" });
+});
 
 router.post("/logout", logoutUser);
 

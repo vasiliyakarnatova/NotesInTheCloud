@@ -5,6 +5,10 @@ class Editor extends Model{
         return 'editor';
     }
 
+    static get idColumn() {
+        return ['noteId', 'name'];
+    }
+
     static get jsonSchema() {
         return {
             type: 'object',

@@ -11,7 +11,21 @@
     "outDir": "dist",
     "rootDir": ".",
     "jsx": "react-jsx",
-    "typeRoots": ["./node_modules/@types"],
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "baseUrl": "./src",
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
   },
-  "include": ["index.ts", "src/**/*", "tsconfig.node.json", "src"],
+  "include": [
+    "index.ts",
+    "src/**/*",
+    "src/db/db-setup.ts",
+    "tsconfig.node.json",
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

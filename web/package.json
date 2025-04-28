@@ -5,12 +5,14 @@
   "scripts": {
     "migrate": "npx knex migrate:latest --knexfile ./src/db/knexfile.js",
     "down": "npx knex migrate:down --knexfile ./src/db/knexfile.js",
-    "devDB": "nodemon --exec ts-node index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "devLoginServer": "nodemon --exec ts-node index.ts",
     "devVite": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "runTest": "npx ts-node-dev src/db/testUser.ts",
+    "devDB": "nodemon index.js"
+    
   },
   "keywords": [],
   "author": "",

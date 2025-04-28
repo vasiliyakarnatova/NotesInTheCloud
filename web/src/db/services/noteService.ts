@@ -2,36 +2,48 @@ const Note = require('../models/note');
 const Editor = require('../models/editor');
 
 import { INote } from '../interfaces/note';
-import { IEditor } from '../interfaces/editor';
+
+import { v4 as uuidv4 } from 'uuid';
 
 export type INoteUpdate = Partial<Pick<INote, 'title' | 'description'>>;
 
-export const addEditorToNote = async (noteId: string, userName: string) => {
-    return Editor.query().insert({ noteId, userName });
+export const addEditorToNote = async (noteId: string, name: string) => {
+    return await Editor.query().insert({ noteId, name });
 };
 
+// createNote(...) => addEditorToNote(...)
 export const createNote = async (title: string, description: string, author: string) => {
-    const newNote = await Note.query().insert({ title, description, author });
-    addEditorToNote(newNote.noteId, author);
+    const noteId = uuidv4(); 
+    const createdAt = new Date().toISOString();
+    const updatedAt = createdAt;
+    const newNote = await Note.query().insert({ noteId, title, description, author, createdAt, updatedAt });
     return newNote;
 };
 
 export const getNote = async (noteId: string) => {
-    return await Note.query().findOne({ noteId });
+    return await Note.query().findOne({ noteId: noteId });
 };
 
 export const getNotesFromUser = async (userName: string) => {
     return await Note.query()
     .leftJoin('editor', 'note.noteId', 'editor.noteId')
-    .where('note.author', userName)
     .orWhere('editor.name', userName);
 };
 
 export const updateNote = async (noteId: string, data: INoteUpdate) => {
-    return await Note.query().patchAndFetch(data); // patch - partly update + fetch - get updated row
+    const note = await Note.query().findById(noteId);
+    if (!note) {
+        throw new Error('Note not found');
+    }
+
+    const updatedData = {
+        ...data,
+        updated_at: new Date().toISOString()
+    };
+    return await note.$query().patchAndFetch(updatedData); 
 };
 
+// deleteNote(...) => deleteEditor(...) for this note
 export const deleteNote = async (noteId: string) => {
-    await Editor.query().delete().where({ noteId });
     return await Note.query().deleteById(noteId);
 };
