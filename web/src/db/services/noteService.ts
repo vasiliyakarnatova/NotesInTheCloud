@@ -34,7 +34,7 @@ export const createNote = async (title: string, description: string, author: str
         console.log("something went wrong creating new Note: " + err);
         return undefined;
     }
-};
+}
 
 export const getNote = async (noteId: string) => {
     return await Note.query().findOne({ noteId: noteId });
