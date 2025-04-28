@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <title>Notes in the Cloud - Напомняния</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    form {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 300px;
+    }
+
+    input[type="text"],
+    input[type="datetime-local"] {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    button {
+      background: #4CAF50;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    .notification {
+      margin-top: 20px;
+      color: #d9534f;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Notes in the Cloud - Напомняния</h1>
+
+  <form id="reminder-form">
+    <input type="text" id="title" placeholder="Заглавие на напомняне" required />
+    <input type="datetime-local" id="time" required />
+    <button type="submit">Създай напомняне</button>
+  </form>
+
+  <div class="notification" id="notification"></div>
+
+  <script src="./dist/app.js"></script> 
+</body>
+</html>
