@@ -1,5 +1,5 @@
-import setupDb from "./db-setup.ts";
-import { createTodo, updateTodo, deleteTodo } from './services/todoItemService'
+import setupDb from "../db-setup";
+import { createTodo, updateTodo, deleteTodo } from '../services/todoItemService'
 
 setupDb();
 

@@ -1,5 +1,8 @@
 const { Model } = require('objection');
 
+const User = require('./user');
+const Note = require('./note');
+
 class Editor extends Model{
     static get tableName() {
         return 'editor';
@@ -21,9 +24,6 @@ class Editor extends Model{
     }
 
     static get relationMappings() {
-        const User = require('./user');
-        const Note = require('./note');
-
         return{
             user: {
                 relation: Model.BelongsToOneRelation,

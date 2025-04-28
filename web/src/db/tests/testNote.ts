@@ -1,5 +1,5 @@
-import setupDb from './db-setup.ts';
-import { addEditorToNote, createNote, getNote, getNotesFromUser, updateNote, deleteNote } from './services/noteService.ts'
+import setupDb from '../db-setup.ts';
+import { addEditorToNote, createNote, getNote, getNotesFromUser, updateNote, deleteNote } from '../services/noteService.ts'
 
 setupDb();
 

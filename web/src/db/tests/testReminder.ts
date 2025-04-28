@@ -1,6 +1,6 @@
-import setupDb from "./db-setup";
-import { createReminder, updateReminder, deleteReminder, getReminder, getRemindersFromUser } from '../db/services/reminderService';
-import { getNotificationsFromUser } from "./services/notificationServise";
+import setupDb from "../db-setup";
+import { createReminder, updateReminder, deleteReminder, getReminder, getRemindersFromUser } from '../services/reminderService';
+import { getNotificationsFromUser } from "../services/notificationServise";
 
 setupDb();
 

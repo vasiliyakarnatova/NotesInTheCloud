@@ -1,5 +1,7 @@
 const { Model } = require('objection');
 
+const User = require('./user')
+
 class Notification extends Model{
     static get tableName() {
         return 'notification';
@@ -23,9 +25,6 @@ class Notification extends Model{
     }
 
     static get relationMappings() {
-        const Reminder = require('./reminder');
-        const User = require('./user')
-
         return{
             reminder: {
                 relation: Model.HasOneThroughRelation,

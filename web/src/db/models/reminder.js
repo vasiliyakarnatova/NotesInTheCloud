@@ -1,5 +1,9 @@
 const { Model } = require('objection');
 
+const User = require('./user');
+const Note = require('./note');
+const Notification = require('./notification');
+
 class Reminder extends Model{
     static get tableName() {
         return 'reminder';
@@ -24,10 +28,6 @@ class Reminder extends Model{
     }
 
     static get relationMappings() {
-        const User = require('./user');
-        const Note = require('./note');
-        const Notification = require('./notification');
-
         return {
             user: {
                 relation: Model.BelongsToOneRelation,
