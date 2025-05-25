@@ -1,21 +1,25 @@
 {
-    "compilerOptions": {
-      "baseUrl": "./src",
-      "target": "ES2020",
-      "module": "CommonJS",
-      "rootDir": "src",
-      "outDir": "dist",
-      "noEmit": true,
-      "allowImportingTsExtensions": true,
-      "esModuleInterop": true,
-      "strict": true,
-      "skipLibCheck": true
-    },
-    "include": [
-      "src/**/*.ts", 
-      "src/db/db-setup.ts"  
-    ],
-    "exclude": [
-      "node_modules"
-    ]
+  "include": ["src/apps/frontend-main/client/src/**/*", "src/apps/frontend-main/shared/**/*", "src/apps/frontend-main/server/**/*"],
+  "exclude": ["node_modules", "build", "dist", "**/*.test.ts"],
+  "compilerOptions": {
+    "incremental": true,
+    "tsBuildInfoFile": "./node_modules/typescript/tsbuildinfo",
+    "noEmit": true,
+    "target": "ES2020",
+    "module": "ESNext",
+    "rootDir": ".",
+    "lib": ["esnext", "dom", "dom.iterable"],
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "allowImportingTsExtensions": true,
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "types": ["node", "vite/client"],
+    "paths": {
+      "@/*": ["src/apps/frontend-main/client/src/*"],
+      "@shared/*": ["src/apps/frontend-main/shared/*"]
+    }
+  }
 }
