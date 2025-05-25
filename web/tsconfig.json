@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+      "baseUrl": "./src",
+      "target": "ES2020",
+      "module": "CommonJS",
+      "rootDir": "src",
+      "outDir": "dist",
+      "noEmit": true,
+      "allowImportingTsExtensions": true,
+      "esModuleInterop": true,
+      "strict": true,
+      "skipLibCheck": true
+    },
+    "include": [
+      "src/**/*.ts", 
+      "src/db/db-setup.ts"  
+    ],
+    "exclude": [
+      "node_modules"
+    ]
+  }
