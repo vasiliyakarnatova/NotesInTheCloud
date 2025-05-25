@@ -1,8 +1,8 @@
 import { IEditor } from "db/interfaces/editor"
 import { INote } from "db/interfaces/note"
 import { ITodoItem } from "db/interfaces/todoItem"
-import { FullNoteOutput } from "types/outputs/fullNoteOutput"
-import { NoteOutput } from "types/outputs/noteOutput"
+import { FullNoteOutput } from "apps/backend-main/types/outputs/fullNoteOutput"
+import { NoteOutput } from "apps/backend-main/types/outputs/noteOutput"
 
 class NoteConverter {
     dbNoteToNoteOutput(dbNote: INote): NoteOutput {

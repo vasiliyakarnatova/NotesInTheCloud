@@ -1,4 +1,4 @@
-import { createTodo, deleteTodo, updateTodo } from "../db/services/todoItemService";
+import { createTodo, deleteTodo, updateTodo } from "../../../db/services/todoItemService";
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 

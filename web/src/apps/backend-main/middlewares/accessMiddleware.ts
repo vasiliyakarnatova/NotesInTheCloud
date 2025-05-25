@@ -1,8 +1,8 @@
-import { getEditorByUsernameAndNoteId } from "../db/services/editorService";
+import { getEditorByUsernameAndNoteId } from "../../../db/services/editorService";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { USER_ID } from "../utils/utils";
-import { getUserByUserName } from "../db/services/userService";
+import { getUserByUserName } from "../../../db/services/userService";
 
 export async function accessToNoteMiddleware(req: Request, res: Response, next: NextFunction) {
     const userId = req.headers[USER_ID] as string;

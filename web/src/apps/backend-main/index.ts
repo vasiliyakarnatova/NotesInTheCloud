@@ -2,7 +2,7 @@ import express from "express";
 import routes from "./routes/server";
 import cors from "cors";
 import { validateUserIdMiddleware } from "./middlewares/userIdMiddleware";
-import setupDb from './db/db-setup';
+import setupDb from '../../db/db-setup';
 import { accessToServerMiddleware } from "./middlewares/accessMiddleware";
 
 const app = express();

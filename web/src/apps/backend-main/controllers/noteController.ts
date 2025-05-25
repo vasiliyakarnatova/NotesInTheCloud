@@ -1,13 +1,13 @@
 import { Request, Response } from "express"
-import { createNote, deleteNote, getNote, getNotesFromUser, updateNote } from "../db/services/noteService"
+import { createNote, deleteNote, getNote, getNotesFromUser, updateNote } from "../../../db/services/noteService"
 import { StatusCodes } from "http-status-codes";
 import { USER_ID } from "../utils/utils";
 import noteConverter from "../types/converters/noteConverter";
-import { NoteOutput } from "types/outputs/noteOutput";
+import { NoteOutput } from "apps/backend-main/types/outputs/noteOutput";
 import { INote } from "db/interfaces/note";
-import { getTodos } from "../db/services/todoItemService";
+import { getTodos } from "../../../db/services/todoItemService";
 import { ITodoItem } from "db/interfaces/todoItem";
-import { getEditorsByNoteId } from "../db/services/editorService";
+import { getEditorsByNoteId } from "../../../db/services/editorService";
 import { IEditor } from "db/interfaces/editor";
 
 export const getNotes = async (req: Request, res: Response) => {
