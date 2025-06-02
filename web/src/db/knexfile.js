@@ -10,6 +10,8 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
+      host: 'localhost',
+      port: 5432,
       database: 'my_db',
       user:     'postgres',
       password: 'password'
@@ -23,6 +25,4 @@ module.exports = {
     },
     ...knexSnakeCaseMappers(),
   },
-
-
 };

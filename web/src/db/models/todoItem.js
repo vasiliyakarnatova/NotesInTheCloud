@@ -1,5 +1,7 @@
 const { Model } = require('objection');
 
+const Note = require('./note');
+
 class TodoItem extends Model {
     static get tableName() {
         return 'todoItem';
@@ -24,8 +26,6 @@ class TodoItem extends Model {
     }
 
     static get relationMappings() {
-        const Note = require('./note');
-
         return {
             note: {
                 relation: Model.BelongsToOneRelation,

@@ -1,5 +1,9 @@
 const { Model } = require('objection');
 
+const Editor = require('./editor');
+const Note = require('./note');
+const Reminder = require('./reminder');
+
 class User extends Model{
 
     static get tableName() {
@@ -23,10 +27,6 @@ class User extends Model{
     }
 
     static get relationMappings() {
-        const Editor = require('./editor');
-        const Note = require('./note');
-        const Reminder = require('./reminder');
-
         return{
             notes: {
                 relation: Model.HasManyRelation,
