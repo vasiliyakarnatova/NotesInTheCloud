@@ -4,9 +4,11 @@ import { storage } from "./storage";
 import { insertNoteSchema, insertTodoItemSchema, insertNoteEditorSchema } from "@shared/schema";
 import { z } from "zod";
 import { getNotes, getNote, createNote, updateNote, deleteNote, createTask, updateTask, deleteTask  } from "./notes/note_service";
+import { createEditor } from "./editors/editor_service"
 import { getCookie, getRemoveCookieHeader, USER_TOKEN } from "./utils/utils";
 import { NoteResolver, NoteWithTodosResolver } from "./structures/note_structures";
 import { TodoItemResolver } from "./structures/todo_structures";
+import { EditorResolver } from "./structures/editor_structures";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/notes", async (req, res) => {
@@ -145,40 +147,52 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/notes/:id/editors", async (req, res) => {
-    try {
-      const id = parseInt(req.params.id);
-      const editors = await storage.getNoteEditors(id);
-      res.json(editors);
-    } catch (error) {
-      res.status(500).json({ message: "Failed to get note editors" });
-    }
-  });
+  // app.get("/api/notes/:id/editors", async (req, res) => {
+  //   try {
+  //     const id = parseInt(req.params.id);
+  //     const editors = await storage.getNoteEditors(id);
+  //     res.json(editors);
+  //   } catch (error) {
+  //     res.status(500).json({ message: "Failed to get note editors" });
+  //   }
+  // });
 
   app.post("/api/notes/:id/editors", async (req, res) => {
-    try {
-      const noteId = parseInt(req.params.id);
-      const userId = 1; 
+    // try {
+    //   const noteId = parseInt(req.params.id);
+    //   const userId = 1; 
       
-      const editorData = {
-        noteId,
-        userId,
-      };
+    //   const editorData = {
+    //     noteId,
+    //     userId,
+    //   };
       
-      const validatedData = insertNoteEditorSchema.parse(editorData);
-      const editor = await storage.addNoteEditor(validatedData);
+    //   const validatedData = insertNoteEditorSchema.parse(editorData);
+    //   const editor = await storage.addNoteEditor(validatedData);
       
-      if (!editor) {
-        return res.status(404).json({ message: "Note or user not found" });
-      }
+    //   if (!editor) {
+    //     return res.status(404).json({ message: "Note or user not found" });
+    //   }
       
-      res.status(201).json(editor);
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ message: "Invalid editor data", errors: error.errors });
-      }
-      res.status(500).json({ message: "Failed to add editor" });
+    //   res.status(201).json(editor);
+    // } catch (error) {
+    //   if (error instanceof z.ZodError) {
+    //     return res.status(400).json({ message: "Invalid editor data", errors: error.errors });
+    //   }
+    //   res.status(500).json({ message: "Failed to add editor" });
+    // }
+
+    const noteId = req.params.id;
+    const collaboratorId = req.body.userId;
+
+    console.log(collaboratorId);
+    let editor: EditorResolver | null = null;
+    const username = getCookie(req.headers.cookie, USER_TOKEN);
+    if (typeof username === 'string') {
+      editor = await createEditor(username, noteId, collaboratorId);
     }
+    
+    res.status(200).json(editor);
   });
 
   app.delete("/api/notes/:noteId/editors/:userId", async (req, res) => {
@@ -231,19 +245,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  app.get("/api/notes/:id/details", async (req, res) => {
-    try {
-      const id = parseInt(req.params.id);
-      const noteDetails = await storage.getNoteWithDetails(id);
-      
-      if (!noteDetails) {
-        return res.status(404).json({ message: "Note not found" });
-      }
-      
-      res.json(noteDetails);
-    } catch (error) {
-      res.status(500).json({ message: "Failed to get note details" });
+app.get("/api/notes/:id/details", async (req, res) => {
+    const id = req.params.id;
+    
+    const username = getCookie(req.headers.cookie, USER_TOKEN);
+    let note: NoteWithTodosResolver  | null = null;
+    if (typeof username === 'string') {
+      note = await getNote(username, id);
     }
+    
+    res.json(note);  
   });
 
   // Logout API route
