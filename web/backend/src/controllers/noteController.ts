@@ -35,7 +35,6 @@ export const getNoteFromUser = async (req: Request, res: Response) => {
         res.status(StatusCodes.NO_CONTENT).json(`note with id ${noteId} not found`);
         return;
     }
-
     const todos = await getTodos(noteId) as ITodoItem[] | undefined;
     if (!todos) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(`something went wrong quering note tasks with id: ${ noteId }`);
