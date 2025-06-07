@@ -1,3 +1,4 @@
+import { convertEditorServerToResolver } from "server/editors/editor_conventor";
 import { FullNoteServer, NoteResolver, NoteServer, NoteWithTodosResolver } from "server/structures/note_structures";
 import { TodoItemResolver } from "server/structures/todo_structures";
 import { convertTodoItemServerToResolver } from "server/tasks/task_converter";
@@ -27,7 +28,9 @@ function convertFullNoteToNoteWithTodos(sourceNote: FullNoteServer): NoteWithTod
         isPublic: false,
         allowEdit: true,
         shareId: null,
-        editors: sourceNote.editors,
+        editors: sourceNote.editors.map(editor => {
+            return convertEditorServerToResolver(editor);
+        }),
         todoItems: sourceNote.todos.map(todo => {
             return convertTodoItemServerToResolver(todo);
         })

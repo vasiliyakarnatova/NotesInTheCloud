@@ -1,4 +1,5 @@
 import { TodoItemResolver, TodoItemServer } from "./todo_structures";
+import { EditorResolver, EditorServer } from "./editor_structures";
 
 export type NoteResolver = {
     id: string;
@@ -13,7 +14,7 @@ export type NoteResolver = {
 }
 
 export type NoteWithTodosResolver = NoteResolver & {
-    editors: any[];
+    editors: EditorResolver[];
     todoItems: TodoItemResolver[];
 }
 
@@ -30,6 +31,6 @@ export type FullNoteServer = {
     author: string;
     createdAt?: string;
     modifiedAt?: string;
-    editors: any[];
+    editors: EditorServer[];
     todos: TodoItemServer[];
 }

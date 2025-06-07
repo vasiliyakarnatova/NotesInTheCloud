@@ -2,6 +2,8 @@ import { IEditor } from "../../../../db/interfaces/editor"
 import { INote } from "../../../../db/interfaces/note"
 import { ITodoItem } from "../../../../db/interfaces/todoItem"
 import { FullNoteOutput, NoteOutput } from "../../types/structures/note_structures"
+import camelcaseKeys from 'camelcase-keys';
+import { Camelable } from "../../utils/utils";
 
 class NoteConverter {
     dbNoteToNoteOutput(dbNote: INote): NoteOutput {
@@ -9,24 +11,26 @@ class NoteConverter {
             id: dbNote.noteId,
             title: dbNote.title,
             description: dbNote.description,
-        }
+        };
 
-        return noteOutput
+        return noteOutput;
     }
 
     toFullNoteOutput(dbNote: INote, dbTodos: ITodoItem[], dbEditors: IEditor[]): FullNoteOutput {
+        const camelNote = camelcaseKeys(dbNote as Camelable<INote>, { deep: true });
+
         const noteOutput: FullNoteOutput = {
-            id: dbNote.noteId,
-            title: dbNote.title,
-            description: dbNote.description,
-            author: dbNote.author,
-            createdAt: dbNote.created_at ,
-            modifiedAt: dbNote.updated_at,
+            id: camelNote.noteId,
+            title: camelNote.title,
+            description: camelNote.description,
+            author: camelNote.author,
+            createdAt: camelNote.createdAt,
+            modifiedAt: camelNote.updatedAt,
             todos: dbTodos,
             editors: dbEditors,
-        }
-
-        return noteOutput
+        };
+        
+        return noteOutput;
     }
 }
 

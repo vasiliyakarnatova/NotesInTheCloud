@@ -4,14 +4,6 @@ import { getUser } from "../utils/utils";
 import { StatusCodes } from "http-status-codes";
 import bcrypt from "bcryptjs";
 
-// declare module "express-session" {
-//     interface SessionData {
-//         userInSession?: {
-//             userName: string;
-//             email: string;
-//         };
-//     }
-// }
 
 export const loginUser = async (req: Request, res: Response): Promise<IUser | undefined | any> => {
     const { username, password } = req.body;

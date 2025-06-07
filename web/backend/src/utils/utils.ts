@@ -57,3 +57,7 @@ export const currentUser = async (req:Request, res:Response): Promise<any> => {
         return undefined; // ??
     }
 };
+
+export type Camelable<T> = {
+  [K in keyof T]: T[K];
+} & Record<string, unknown>;
