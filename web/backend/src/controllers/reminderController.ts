@@ -1,6 +1,4 @@
-const Reminder = require('../models/reminder');
-
-import { createNotification, updateNotification } from './notificationController';
+import Reminder from '../../../db/models/reminder';
 
 import { v4 as uuidv4 } from 'uuid';
 

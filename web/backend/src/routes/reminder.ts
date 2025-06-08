@@ -1,5 +1,5 @@
-import { Reminder } from '../../../db/models/reminder';
-import { createNotification, updateNotification } from '../../../db/services/notificationService';
+import Reminder from '../../../db/models/reminder';
+import { createNotification, updateNotification } from '../../../db/services/notificationServise';
 import { v4 as uuidv4 } from 'uuid';
 import { IReminder } from '../../../db/interfaces/reminder';
 

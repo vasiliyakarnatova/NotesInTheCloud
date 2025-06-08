@@ -5,7 +5,7 @@ import {
   deleteNotification,
   getNotification,
   getNotificationsFromUser
-} from '../../../db/services/notificationService';
+} from '../../../db/services/notificationServise';
 
 const router = express.Router();
 
