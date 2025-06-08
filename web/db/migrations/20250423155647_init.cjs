@@ -49,9 +49,9 @@ exports.up = function(knex) {
  */
 exports.down = function(knex) { 
   return knex.schema
-    .dropTableIfExists('todo_Item')
     .dropTableIfExists('notification')
     .dropTableIfExists('reminder')
+    .dropTableIfExists('todoItem')
     .dropTableIfExists('editor')
     .dropTableIfExists('note')
     .dropTableIfExists('user');
