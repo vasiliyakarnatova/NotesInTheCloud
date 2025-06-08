@@ -7,7 +7,7 @@ const Reminder = require('./reminder');
 class User extends Model{
 
     static get tableName() {
-        return 'user';
+        return 'users';
     }
 
     static get idColumn() {
@@ -32,8 +32,8 @@ class User extends Model{
                 relation: Model.HasManyRelation,
                 modelClass: Note,
                 join: {
-                    from: 'user.userName',
-                    to: 'note.author'
+                    from: 'users.userName',
+                    to: 'notes.author'
                 }
             },
 
@@ -41,8 +41,8 @@ class User extends Model{
                 relation: Model.HasManyRelation,
                 modelClass: Editor,
                 join: {
-                    from: 'user.userName',
-                    to: 'editor.name'
+                    from: 'users.userName',
+                    to: 'editors.name'
                 }
             },
 
@@ -50,8 +50,8 @@ class User extends Model{
                 relation: Model.HasManyRelation,
                 modelClass: Reminder,
                 join: {
-                    from: 'user.userName',
-                    to: 'reminder.remindCreater'
+                    from: 'users.userName',
+                    to: 'reminders.remindCreater'
                 }
             }
         };

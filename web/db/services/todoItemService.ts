@@ -8,8 +8,8 @@ export type ITodoItemUpdate = Partial<Pick<ITodoItem, 'todoItemTitle' | 'isCheck
 
 export const getTodos = async (noteId: string) => {
     const todos = await TodoItem.query()
-            .select('todo_item.*')
-            .where('todo_item.note_id', noteId);
+            .select('todo_items.*')
+            .where('todo_items.note_id', noteId);
     return todos;
 }
 

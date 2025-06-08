@@ -37,6 +37,6 @@ export const getNotification = async (notificationId: string) => {
 
 export const getNotificationsFromUser = async (userName: string) => {
     return Notification.query()
-    .join('reminder', 'notification.remindId', 'reminder.reminderId')
-    .where('reminder.reminderCreater', userName);
+    .join('reminders', 'notifications.remindId', 'reminders.reminderId')
+    .where('reminders.reminderCreater', userName);
 };

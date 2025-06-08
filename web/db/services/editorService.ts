@@ -20,6 +20,6 @@ export const getEditorByUsernameAndNoteId = async (userId: string, noteId: strin
 
 export const getEditorsByNoteId = async (noteId: string) => {
     return await Editor.query()
-        .select('editor.*')
-        .where('editor.noteId', noteId);
+        .select('editors.*')
+        .where('editors.noteId', noteId);
 }

@@ -4,7 +4,7 @@ const User = require('./user')
 
 class Notification extends Model{
     static get tableName() {
-        return 'notification';
+        return 'notifications';
     }
 
     static get idColumn() {
@@ -30,12 +30,12 @@ class Notification extends Model{
                 relation: Model.HasOneThroughRelation,
                 modelClass: User,
                 join: {
-                    from: 'notification.remindId',
+                    from: 'notifications.remindId',
                     through: {
-                        from: 'reminder.reminderId',
-                        to: 'reminder.reminderCreater'
+                        from: 'reminders.reminderId',
+                        to: 'reminders.reminderCreater'
                     },
-                    to: 'user.userName'
+                    to: 'users.userName'
                 }
             }
         };

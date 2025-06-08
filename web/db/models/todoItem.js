@@ -4,7 +4,7 @@ const Note = require('./note');
 
 class TodoItem extends Model {
     static get tableName() {
-        return 'todoItem';
+        return 'todoItems';
     }
 
     static get idColumn() {
@@ -31,8 +31,8 @@ class TodoItem extends Model {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Note,
                 join: {
-                    from: 'todoItem.noteId',
-                    to: 'note.noteId'
+                    from: 'todoItems.noteId',
+                    to: 'notes.noteId'
                 }
             }
         };

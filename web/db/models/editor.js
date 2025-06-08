@@ -5,7 +5,7 @@ const Note = require('./note');
 
 class Editor extends Model{
     static get tableName() {
-        return 'editor';
+        return 'editors';
     }
 
     static get idColumn() {
@@ -29,8 +29,8 @@ class Editor extends Model{
                 relation: Model.BelongsToOneRelation,
                 modelClass: User,
                 join: {
-                    from: 'editor.name',
-                    to: 'user.userName'
+                    from: 'editors.name',
+                    to: 'users.userName'
                 }
             },
 
@@ -38,8 +38,8 @@ class Editor extends Model{
                 relation: Model.BelongsToOneRelation,
                 modelClass: Note, 
                 join: {
-                    from: 'editor.noteId',
-                    to: 'note.noteId'
+                    from: 'editors.noteId',
+                    to: 'notes.noteId'
                 }
             }
         };

@@ -6,7 +6,7 @@ const Notification = require('./notification');
 
 class Reminder extends Model{
     static get tableName() {
-        return 'reminder';
+        return 'reminders';
     }
 
     static get idColumn() {
@@ -33,8 +33,8 @@ class Reminder extends Model{
                 relation: Model.BelongsToOneRelation,
                 modelClass: User,
                 join: {
-                    from: 'reminder.remindCreater',
-                    to: 'user.userName'
+                    from: 'reminders.remindCreater',
+                    to: 'users.userName'
                 }
             },
 
@@ -42,8 +42,8 @@ class Reminder extends Model{
                 relation: Model.BelongsToOneRelation,
                 modelClass: Note,
                 join: {
-                    from: 'reminder.noteId',
-                    to: 'note.noteId'
+                    from: 'reminders.noteId',
+                    to: 'notes.noteId'
                 }
             },
 
@@ -51,8 +51,8 @@ class Reminder extends Model{
                 relation: Model.HasOneRelation,
                 modelClass: Notification,
                 join: {
-                    from: 'reminder.reminderId',
-                    to: 'notification.reminderId'
+                    from: 'reminders.reminderId',
+                    to: 'notifications.reminderId'
                 }
             }
 

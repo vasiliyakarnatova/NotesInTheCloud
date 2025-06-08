@@ -37,5 +37,5 @@ export const getReminder = async (reminderId: string) => {
 
 export const getRemindersFromUser = async (userName: string) => {
     return await Reminder.query()
-    .where('reminder.reminderCreater', userName);
+    .where('reminders.reminderCreater', userName);
 };

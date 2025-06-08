@@ -4,40 +4,40 @@
  */
 exports.up = function(knex) { 
   return knex.schema
-    .createTable('user', (table) => {
+    .createTable('users', (table) => {
       table.string('userName').primary();
       table.string('password').notNullable();
-      table.string('email').notNullable();
+      table.string('email').notNullable().unique();
     })
-    .createTable('note', (table) => { 
+    .createTable('notes', (table) => { 
       table.uuid('noteId').defaultTo(knex.raw('gen_random_uuid()')).primary();
       table.string('title').notNullable();
       table.string('description');
-      table.string('author').notNullable().references('userName').inTable('user');
+      table.string('author').notNullable().references('userName').inTable('users');
       table.timestamps(true, true);
     })
-    .createTable('editor', (table) => {
-      table.uuid('noteId').notNullable().references('noteId').inTable('note');
-      table.string('name').notNullable().references('userName').inTable('user');
+    .createTable('editors', (table) => {
+      table.uuid('noteId').notNullable().references('noteId').inTable('notes');
+      table.string('name').notNullable().references('userName').inTable('users');
       table.primary(['noteId', 'name']);
     })
-    .createTable('todoItem', (table) => {
+    .createTable('todoItems', (table) => {
       table.uuid('todoItemId').defaultTo(knex.raw('gen_random_uuid()')).primary();
       table.string('todoItemTitle').notNullable();
       table.boolean('isChecked').notNullable();
-      table.uuid('noteId').notNullable().references('noteId').inTable('note');
+      table.uuid('noteId').notNullable().references('noteId').inTable('notes');
       table.timestamp('createdTime').defaultTo(knex.fn.now());
     })
-    .createTable('reminder', (table) => {
+    .createTable('reminders', (table) => {
       table.uuid('reminderId').defaultTo(knex.raw('gen_random_uuid()')).primary();
-      table.uuid('noteId').notNullable().references('noteId').inTable('note');
-      table.string('reminderCreater').notNullable().references('userName').inTable('user');
+      table.uuid('noteId').notNullable().references('noteId').inTable('notes');
+      table.string('reminderCreater').notNullable().references('userName').inTable('users');
       table.timestamp('remindTime').notNullable();
       table.string('description').notNullable();
     })
-    .createTable('notification', (table) => {
+    .createTable('notifications', (table) => {
       table.uuid('notificationId').defaultTo(knex.raw('gen_random_uuid()')).primary();
-      table.uuid('remindId').notNullable().references('reminderId').inTable('reminder');
+      table.uuid('remindId').notNullable().references('reminderId').inTable('reminders');
       table.timestamp('sentAt').defaultTo(knex.fn.now());
       table.boolean('isRead').notNullable();
     });
@@ -49,11 +49,11 @@ exports.up = function(knex) {
  */
 exports.down = function(knex) { 
   return knex.schema
-    .dropTableIfExists('notification')
-    .dropTableIfExists('reminder')
-    .dropTableIfExists('todoItem')
-    .dropTableIfExists('editor')
-    .dropTableIfExists('note')
-    .dropTableIfExists('user');
+    .dropTableIfExists('notifications')
+    .dropTableIfExists('reminders')
+    .dropTableIfExists('todoItems')
+    .dropTableIfExists('editors')
+    .dropTableIfExists('notes')
+    .dropTableIfExists('users');
 };
 
