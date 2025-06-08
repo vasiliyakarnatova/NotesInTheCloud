@@ -201,6 +201,7 @@ const deleteTask = async (username: string, noteId: string, taskId: string): Pro
 
 const getSharedNote = async (username: string, noteId: string): Promise<NoteWithTodosResolver | null> => {
   try {
+    console.log('Fetching shared note for user:', username, 'and noteId:', noteId);
     const response = await fetch(`http://localhost:8081/api/NotesInTheCloud/${ username }/${ noteId }/shared`, {
       method: 'GET',
       headers: {
@@ -213,7 +214,8 @@ const getSharedNote = async (username: string, noteId: string): Promise<NoteWith
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const note: NoteWithTodosResolver = convertFullNoteToNoteWithTodos(await response.json());
+    const note: NoteWithTodosResolver | null = convertFullNoteToNoteWithTodos(await response.json());
+    console.log('Fetched shared note:', note);
     return note;
   }
   catch (error) {

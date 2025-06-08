@@ -19,7 +19,7 @@ export const addCollaborator = async (req: Request, res: Response) => {
 export const shareNote = async (req: Request, res: Response) => {
     const { noteId } = req.params;
     
-    const outputNote = getFullNoteOutputById(noteId);
+    const outputNote = await getFullNoteOutputById(noteId);
     if (outputNote == null) {
         res.status(StatusCodes.BAD_REQUEST).json(`something went wrong get full note information for note with id: ${ noteId }`);
         return;

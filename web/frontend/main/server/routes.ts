@@ -192,7 +192,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/shared/:shareId", async (req, res) => {
     const id = req.params.shareId;
-
+    console.log("Shared note ID dasdadasd:", id);
     const username = getCookie(req.headers.cookie, USER_TOKEN);
     let note: NoteWithTodosResolver  | null = null;
     if (typeof username === 'string') {
