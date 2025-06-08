@@ -6,7 +6,10 @@
     "devBackend": "npm --prefix web run devBackend",
     "devAuth": "npm --prefix web run devAuth",
     "devMain": "npm --prefix web/frontend/main run dev",
-    "dev": "concurrently -n backend,auth,main -c blue,magenta,green \"npm run devBackend\" \"npm run devAuth\" \"npm run devMain\""
+    "dev": "concurrently -n backend,auth,main -c blue,magenta,green \"npm run devBackend\" \"npm run devAuth\" \"npm run devMain\"",
+    "down": "npm --prefix web run down",
+    "migrate": "npm --prefix web run migrate",
+    "docker-container": "--prefix web docker-compose up -d"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
