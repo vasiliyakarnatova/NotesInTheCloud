@@ -13,6 +13,7 @@ import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { not } from "drizzle-orm";
 
 interface NoteViewerProps {
   note: NoteWithTodos;
@@ -218,11 +219,14 @@ export default function NoteViewer({
 
   //Handle removing editor
   const handleRemoveEditor = async (editorId: string) => {
-    if (!note.id || !editorId) return;
     console.log("Removing editor:", editorId);
+    if (!note.id || !editorId) return;
     try {
       const res = await apiRequest("DELETE", `/api/notes/${note.id}/editors/${editorId}`);
-      if (!res.ok) throw new Error("Failed to remove editor");
+      if (!res.ok) {
+        console.log("Failed to remove editor:", res.status, res.statusText);
+        throw new Error("Failed to remove editor");
+      }
 
       toast({ 
         title: "Success", 
@@ -457,7 +461,7 @@ export default function NoteViewer({
                         <strong>Last Modified:</strong> {formatDate(note.updatedAt || note.createdAt)}
                       </div>
                       <div>
-                        <strong>Author:</strong> User {note.userId}
+                        <strong>Author:</strong> {note.userId}
                       </div>
                       <div>
                         <strong>Editors:</strong> {
@@ -509,13 +513,13 @@ export default function NoteViewer({
                     <div className="text-sm space-y-1">
                       {noteDetails.editors.map((editor: any) => (
                         <div key={editor.id} className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                          <span>User {editor.id}</span>
+                          <span>{editor.username}</span>
                           <Button 
                             variant="ghost" 
                             size="sm"
                             className="h-8 text-gray-400 hover:text-gray-600"
                             onClick={() => {
-                              // This would be implemented to remove an editor
+                              handleRemoveEditor(editor.username);
                               console.log(`Remove editor: ${editor.id}`);
                             }}
                           >

@@ -1,0 +1,14 @@
+{
+  "name": "notes-in-the-cloud",
+  "version": "1.0.0",
+  "scripts": {
+    "install-all": "npm install && npm --prefix web install && npm --prefix web/frontend/main install",
+    "devBackend": "npm --prefix web run devBackend",
+    "devAuth": "npm --prefix web run devAuth",
+    "devMain": "npm --prefix web/frontend/main run dev",
+    "dev": "concurrently -n backend,auth,main -c blue,magenta,green \"npm run devBackend\" \"npm run devAuth\" \"npm run devMain\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
