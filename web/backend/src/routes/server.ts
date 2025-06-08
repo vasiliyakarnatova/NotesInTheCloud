@@ -17,7 +17,7 @@ router.delete("/:noteId/:taskId", accessToNoteMiddleware, deleteTask);
 router.put("/:noteId/:taskId", accessToNoteMiddleware, updateTask)
 
 router.patch("/:noteId", accessToNoteMiddleware, addCollaborator);
-router.delete("/:noteId", accessToNoteMiddleware, removeCollaborator);
+router.delete("/:noteId/editors/:collaboratorId", accessToNoteMiddleware, removeCollaborator);
 router.get("/:userId/:noteId/shared", accessToNoteMiddleware, shareNote);
 
 export default router;

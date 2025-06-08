@@ -179,7 +179,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     // } catch (error) {
     //   res.status(500).json({ message: "Failed to remove editor" });
     // }
-    const { editorId , noteId } = req.params;
+    const { noteId , editorId } = req.params;
+
     const username = getCookie(req.headers.cookie, USER_TOKEN);
     if (typeof username === 'string') {
       await deleteEditor(username, noteId, editorId);

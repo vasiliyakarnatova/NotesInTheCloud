@@ -6,9 +6,9 @@ export const addEditorToNote = async (noteId: string, name: string) => {
 
 export const removeEditorFromNote = async (noteId: string, username: string) => {
     return await Editor.query()
-                .delete()
-                .where('name', username)
-                .andWhere('noteId', noteId);
+            .delete()
+            .where('name', username)
+            .andWhere('noteId', noteId);
 };
 
 export const getEditorByUsernameAndNoteId = async (userId: string, noteId: string) => {

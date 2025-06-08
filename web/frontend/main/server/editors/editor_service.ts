@@ -29,7 +29,7 @@ const createEditor = async (username: string, noteId: string, userId: string): P
 
 const deleteEditor = async (username: string, noteId: string, editorId: string): Promise<void> => {
   try {
-    const response = await fetch('http://localhost:8081/api/NotesInTheCloud/' + noteId, {
+    const response = await fetch('http://localhost:8081/api/NotesInTheCloud/' + noteId + '/editors/' + editorId, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -37,9 +37,8 @@ const deleteEditor = async (username: string, noteId: string, editorId: string):
         'collaboratorId': editorId
       },
     });
-console.log('user_id', username);
-    console.log('collaboratorId', editorId);
     if (!response.ok) {
+      console.log("PROBLEM");
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
