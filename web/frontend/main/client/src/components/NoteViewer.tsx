@@ -216,6 +216,31 @@ export default function NoteViewer({
     }
   };
 
+  //Handle removing editor
+  const handleRemoveEditor = async (editorId: string) => {
+    if (!note.id || !editorId) return;
+    console.log("Removing editor:", editorId);
+    try {
+      const res = await apiRequest("DELETE", `/api/notes/${note.id}/editors/${editorId}`);
+      if (!res.ok) throw new Error("Failed to remove editor");
+
+      toast({ 
+        title: "Success", 
+        description: "Editor removed successfully" 
+      });
+
+      // Reload details
+      await loadNoteDetails();
+    } catch (error) {
+      console.error("Error removing editor:", error);
+      toast({ 
+        title: "Error", 
+        description: "Failed to remove editor", 
+        variant: "destructive" 
+      });
+    }
+  }
+  
   // Handle creating reminder
   const handleCreateReminder = async () => {
     if (!reminderDate || !reminderTime) {

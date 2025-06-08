@@ -12,7 +12,6 @@ export const registerUser = async (req: Request, res: Response): Promise<IUser |
         if (await containsUsername(username)) {
             res.status(StatusCodes.BAD_REQUEST).json({ message: "Username already taken" });
             return;
-
         }
 
         if (await containsEmail(email)) {

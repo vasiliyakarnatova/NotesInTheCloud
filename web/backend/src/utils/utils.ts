@@ -51,10 +51,10 @@ export const getUser = async (username: string) => {
 export const currentUser = async (req:Request, res:Response): Promise<any> => {
     if (req.session && req.session.userInSession) {
         res.status(StatusCodes.OK).json(req.session.userInSession);
-        return req.session.userInSession; // ??
+        return req.session.userInSession;
     } else {
         res.status(StatusCodes.UNAUTHORIZED).json({ message: "Not authenticated" });
-        return undefined; // ??
+        return undefined;
     }
 };
 

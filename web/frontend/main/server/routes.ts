@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import { insertNoteSchema, insertTodoItemSchema, insertNoteEditorSchema } from "@shared/schema";
 import { z } from "zod";
 import { getNotes, getNote, createNote, updateNote, deleteNote, createTask, updateTask, deleteTask  } from "./notes/note_service";
-import { createEditor } from "./editors/editor_service"
+import { createEditor, deleteEditor } from "./editors/editor_service"
 import { getCookie, getRemoveCookieHeader, USER_TOKEN } from "./utils/utils";
 import { NoteResolver, NoteWithTodosResolver } from "./structures/note_structures";
 import { TodoItemResolver } from "./structures/todo_structures";
@@ -158,52 +158,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // });
 
   app.post("/api/notes/:id/editors", async (req, res) => {
-    // try {
-    //   const noteId = parseInt(req.params.id);
-    //   const userId = 1; 
-      
-    //   const editorData = {
-    //     noteId,
-    //     userId,
-    //   };
-      
-    //   const validatedData = insertNoteEditorSchema.parse(editorData);
-    //   const editor = await storage.addNoteEditor(validatedData);
-      
-    //   if (!editor) {
-    //     return res.status(404).json({ message: "Note or user not found" });
-    //   }
-      
-    //   res.status(201).json(editor);
-    // } catch (error) {
-    //   if (error instanceof z.ZodError) {
-    //     return res.status(400).json({ message: "Invalid editor data", errors: error.errors });
-    //   }
-    //   res.status(500).json({ message: "Failed to add editor" });
-    // }
-
     const noteId = req.params.id;
-    const collaboratorId = req.body.userId;
+    const userId = req.body.username;
 
-    console.log(collaboratorId);
     let editor: EditorResolver | null = null;
     const username = getCookie(req.headers.cookie, USER_TOKEN);
     if (typeof username === 'string') {
-      editor = await createEditor(username, noteId, collaboratorId);
+      editor = await createEditor(username, noteId, userId);
     }
     
     res.status(200).json(editor);
   });
 
-  app.delete("/api/notes/:noteId/editors/:userId", async (req, res) => {
-    try {
-      const noteId = parseInt(req.params.noteId);
-      const userId = parseInt(req.params.userId);
-      await storage.removeNoteEditor(noteId, userId);
-      res.status(204).send();
-    } catch (error) {
-      res.status(500).json({ message: "Failed to remove editor" });
+  app.delete("/api/notes/:noteId/editors/:editorId", async (req, res) => {
+    // try {
+    //   const noteId = parseInt(req.params.noteId);
+    //   const userId = parseInt(req.params.userId);
+    //   await storage.removeNoteEditor(noteId, userId);
+    //   res.status(204).send();
+    // } catch (error) {
+    //   res.status(500).json({ message: "Failed to remove editor" });
+    // }
+    console.log("Reached me!!!");
+    const noteId = req.params.noteId;
+    const userId = req.params.editorId;
+    const username = getCookie(req.headers.cookie, USER_TOKEN);
+    if (typeof username === 'string') {
+      await deleteEditor(username, noteId, userId);
     }
+
+    res.status(200).json({ message: "Successfully removed editor" });
   });
 
   app.get("/api/shared/:shareId", async (req, res) => {

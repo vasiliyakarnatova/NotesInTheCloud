@@ -1,7 +1,7 @@
 import express from "express";
 import { getNotes, getNoteFromUser, createNoteForUser, updateNoteById, deleteNoteById } from "../controllers/noteController"
 import { createTask, deleteTask, updateTask } from "../controllers/taskController";
-import { addCollaborator, shareNote } from "../controllers/editorController";
+import { addCollaborator, removeCollaborator, shareNote } from "../controllers/editorController";
 import { accessToNoteMiddleware } from "../middlewares/accessMiddleware";
 
 const router = express.Router();
@@ -17,6 +17,7 @@ router.delete("/:noteId/:taskId", accessToNoteMiddleware, deleteTask);
 router.put("/:noteId/:taskId", accessToNoteMiddleware, updateTask)
 
 router.patch("/:noteId", accessToNoteMiddleware, addCollaborator);
+router.delete("/:noteId", accessToNoteMiddleware, removeCollaborator);
 router.get("/:userId/:noteId/shared", accessToNoteMiddleware, shareNote);
 
 export default router;

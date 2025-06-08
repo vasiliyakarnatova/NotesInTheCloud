@@ -4,7 +4,7 @@ import { convertEditorServerToResolver } from "./editor_conventor";
 const createEditor = async (username: string, noteId: string, userId: string): Promise<EditorResolver | null> => {
   try {
     const response = await fetch('http://localhost:8081/api/NotesInTheCloud/' + noteId, {
-      method: 'POST',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'user_id': username
@@ -27,4 +27,25 @@ const createEditor = async (username: string, noteId: string, userId: string): P
   }
 };
 
-export { createEditor }
+const deleteEditor = async (username: string, noteId: string, userId: string): Promise<void> => {
+  try {
+    const response = await fetch('http://localhost:8081/api/NotesInTheCloud/' + noteId, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'user_id': username,
+        'collaboratorId': userId
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+  } catch (error) {
+    console.error('Failed to fetch notes:', error);
+    return; 
+  }
+};
+
+export { createEditor, deleteEditor }
