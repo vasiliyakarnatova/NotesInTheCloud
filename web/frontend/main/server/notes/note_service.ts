@@ -199,4 +199,27 @@ const deleteTask = async (username: string, noteId: string, taskId: string): Pro
   }
 }
 
-export { getNotes, getNote, createNote, updateNote, deleteNote, createTask, updateTask, deleteTask };
+const getSharedNote = async (username: string, noteId: string): Promise<NoteWithTodosResolver | null> => {
+  try {
+    const response = await fetch(`http://localhost:8081/api/NotesInTheCloud/${ username }/${ noteId }/shared`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'user_id': username,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const note: NoteWithTodosResolver = convertFullNoteToNoteWithTodos(await response.json());
+    return note;
+  }
+  catch (error) {
+    console.error('Failed to fetch notes:', error);
+    return null; 
+  }
+};
+
+export { getNotes, getNote, createNote, updateNote, deleteNote, createTask, updateTask, deleteTask, getSharedNote };

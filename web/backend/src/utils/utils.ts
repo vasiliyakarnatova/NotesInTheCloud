@@ -4,6 +4,14 @@ import { Request, Response } from "express";
 import { IUser } from "../../../db/interfaces/user";
 import { getUserByEmail, getUserByUserName } from "../../../db/services/userService";
 import { StatusCodes } from "http-status-codes";
+import { FullNoteOutput } from "../types/structures/note_structures";
+import { getNote } from "../../../db/services/noteService";
+import { INote } from "../../../db/interfaces/note";
+import { getTodos } from "../../../db/services/todoItemService";
+import { ITodoItem } from "../../../db/interfaces/todoItem";
+import { getEditorsByNoteId } from "../../../db/services/editorService";
+import { IEditor } from "../../../db/interfaces/editor";
+import noteConverter from "../types/converters/noteConverter";
 
 export const containsUsername = async (username: string) => {
     try {
@@ -61,3 +69,23 @@ export const currentUser = async (req:Request, res:Response): Promise<any> => {
 export type Camelable<T> = {
   [K in keyof T]: T[K];
 } & Record<string, unknown>;
+
+export const getFullNoteOutputById = async (noteId: string): Promise<FullNoteOutput | null> => {
+    const note = await getNote(noteId) as INote | undefined;
+    if (!note) {
+        return null;
+    }
+    
+    const todos = await getTodos(noteId) as ITodoItem[] | undefined;
+    if (!todos) {
+        return null;
+    }
+
+    const editors = await getEditorsByNoteId(noteId) as IEditor[] | undefined;
+    if (!editors) {
+        return null;
+    }    
+
+    const outputNote = noteConverter.toFullNoteOutput(note, todos, editors);
+    return outputNote;
+}

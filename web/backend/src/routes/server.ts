@@ -18,6 +18,6 @@ router.put("/:noteId/:taskId", accessToNoteMiddleware, updateTask)
 
 router.patch("/:noteId", accessToNoteMiddleware, addCollaborator);
 router.delete("/:noteId/editors/:collaboratorId", accessToNoteMiddleware, removeCollaborator);
-router.get("/:userId/:noteId/shared", accessToNoteMiddleware, shareNote);
+router.get("/:userId/:noteId/shared", shareNote);
 
 export default router;

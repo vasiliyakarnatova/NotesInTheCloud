@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertNoteSchema, insertTodoItemSchema, insertNoteEditorSchema } from "@shared/schema";
 import { z } from "zod";
-import { getNotes, getNote, createNote, updateNote, deleteNote, createTask, updateTask, deleteTask  } from "./notes/note_service";
+import { getNotes, getNote, createNote, updateNote, deleteNote, createTask, updateTask, deleteTask, getSharedNote  } from "./notes/note_service";
 import { createEditor, deleteEditor } from "./editors/editor_service"
 import { getCookie, getRemoveCookieHeader, USER_TOKEN } from "./utils/utils";
 import { NoteResolver, NoteWithTodosResolver } from "./structures/note_structures";
@@ -23,6 +23,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/notes/:id", async (req, res) => {
     const id = req.params.id;
+    
     const username = getCookie(req.headers.cookie, USER_TOKEN);
     let note: NoteWithTodosResolver  | null = null;
     if (typeof username === 'string') {
@@ -190,18 +191,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.get("/api/shared/:shareId", async (req, res) => {
-    try {
-      const shareId = req.params.shareId;
-      const note = await storage.getNoteByShareId(shareId);
-      
-      if (!note) {
-        return res.status(404).json({ message: "Shared note not found" });
-      }
-      
-      res.json(note);
-    } catch (error) {
-      res.status(500).json({ message: "Failed to get shared note" });
+    const id = req.params.shareId;
+
+    const username = getCookie(req.headers.cookie, USER_TOKEN);
+    let note: NoteWithTodosResolver  | null = null;
+    if (typeof username === 'string') {
+      note = await getSharedNote(username, id);
     }
+
+    res.json(note);  
   });
 
   app.put("/api/notes/:id/share", async (req, res) => {

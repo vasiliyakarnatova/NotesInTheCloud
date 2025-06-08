@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { createNote, deleteNote, getNote, getNotesFromUser, updateNote } from "../../../db/services/noteService"
 import { StatusCodes } from "http-status-codes";
-import { USER_ID } from "../utils/utils";
+import { getFullNoteOutputById, USER_ID } from "../utils/utils";
 import noteConverter from "../types/converters/noteConverter";
 import { NoteOutput } from "../types/structures/note_structures";
 import { INote } from "../../../db/interfaces/note";
@@ -30,24 +30,12 @@ export const getNotes = async (req: Request, res: Response) => {
 export const getNoteFromUser = async (req: Request, res: Response) => {
     const { noteId } = req.params;
 
-    const note = await getNote(noteId) as INote | undefined;
-    if (!note) {
-        res.status(StatusCodes.NO_CONTENT).json(`note with id ${noteId} not found`);
-        return;
-    }
-    const todos = await getTodos(noteId) as ITodoItem[] | undefined;
-    if (!todos) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(`something went wrong quering note tasks with id: ${ noteId }`);
+    const outputNote = await getFullNoteOutputById(noteId);
+    if (outputNote == null) {
+        res.status(StatusCodes.BAD_REQUEST).json(`something went wrong get full note information for note with id: ${ noteId }`);
         return;
     }
 
-    const editors = await getEditorsByNoteId(noteId) as IEditor[] | undefined;
-    if (!editors) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(`something went wrong quering note editors with id: ${ noteId }`);
-        return;
-    }
-
-    const outputNote = noteConverter.toFullNoteOutput(note, todos, editors);
     res.status(StatusCodes.OK).json(outputNote);
 };
 

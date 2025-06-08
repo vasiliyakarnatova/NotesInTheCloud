@@ -1,6 +1,7 @@
 import { addEditorToNote, removeEditorFromNote } from "../../../db/services/editorService";
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import { getFullNoteOutputById } from "../utils/utils";
 
 export const addCollaborator = async (req: Request, res: Response) => {
     const { noteId } = req.params;
@@ -16,7 +17,15 @@ export const addCollaborator = async (req: Request, res: Response) => {
 }
 
 export const shareNote = async (req: Request, res: Response) => {
+    const { noteId } = req.params;
+    
+    const outputNote = getFullNoteOutputById(noteId);
+    if (outputNote == null) {
+        res.status(StatusCodes.BAD_REQUEST).json(`something went wrong get full note information for note with id: ${ noteId }`);
+        return;
+    }
 
+    res.status(StatusCodes.OK).json(outputNote);
 }
 
 export const removeCollaborator = async (req: Request, res: Response) => {

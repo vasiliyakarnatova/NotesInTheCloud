@@ -38,6 +38,7 @@ function convertFullNoteToNoteWithTodos(sourceNote: FullNoteServer): NoteWithTod
 }
 
 function convertFullNoteToNote(sourceNote: FullNoteServer): NoteResolver {
+    console.log(sourceNote)
     return {
         id: sourceNote.id,
         userId: sourceNote.author,

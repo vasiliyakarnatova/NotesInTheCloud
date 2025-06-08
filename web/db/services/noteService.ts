@@ -42,13 +42,11 @@ export const getNote = async (noteId: string) => {
 };
 
 export const getNotesFromUser = async (userName: string) => {
-    console.log(userName);
     const notes = await Note.query()
         .select('note.*')
         .join('editor', 'note.noteId', 'editor.noteId')
         .where('editor.name', userName);
     
-    console.log(notes);
     return notes;
 };
 
